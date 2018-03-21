@@ -1,7 +1,7 @@
 %function plotVfit_speechmap
 
 clear 
-%close all
+close all
 current = cd;
 [fname, fpath] = uigetfile('*.xml', 'Choose a .XML file');
 cd(current);
@@ -79,7 +79,7 @@ if ~isempty(idx_peaks)
         mod_avg(:,i) = cell2mat(textscan(char(rawfile.session.test{1,17}.data{1,idx_peaks(i)+1}.Text),'%f'));
         mod_valleys(:,i) = cell2mat(textscan(char(rawfile.session.test{1,17}.data{1,idx_peaks(i)+2}.Text),'%f'));
         mod_name{:,i} = rawfile.session.test{1,17}.data{1,idx_peaks(i)+1}.Attributes.name;
-        %mod_stim_level{:,i} = rawfile.session.test{1,17}.data{1,idx_peaks(i)+1}.Attributes.stim_level;
+        mod_stim_level{:,i} = rawfile.session.test{1,17}.data{1,idx_peaks(i)+1}.Attributes.stim_level;
         mod_stim_type{:,i} = rawfile.session.test{1,17}.data{1,idx_peaks(i)+1}.Attributes.stim_type;
     end
     clear i;
@@ -209,7 +209,7 @@ if exist('mod_name','var')
     if find(contains(mod_name, 'test1')) ~= 0 
         test1 = mod_avg(:,contains(mod_name, 'test1'));
         test1_stim = mod_stim_type(:,contains(mod_name, 'test1'));
-%        test1_level = mod_stim_level(:,contains(mod_name, 'test1'));
+       test1_level = mod_stim_level(:,contains(mod_name, 'test1'));
         test1_name = mod_name(:,contains(mod_name, 'test1'));
         test1_peak = mod_peaks(:,contains(mod_name,'test1'));
         test1_valley = mod_valleys(:,contains(mod_name,'test1'));
@@ -217,7 +217,7 @@ if exist('mod_name','var')
     if find(contains(mod_name, 'test2')) ~= 0 
         test2 = mod_avg(:,contains(mod_name, 'test2'));
         test2_stim = mod_stim_type(:,contains(mod_name, 'test2'));
-%        test2_level = mod_stim_level(:,contains(mod_name, 'test2'));
+        test2_level = mod_stim_level(:,contains(mod_name, 'test2'));
         test2_name = mod_name(:,contains(mod_name, 'test2'));
         test2_peak = mod_peaks(:,contains(mod_name,'test2'));
         test2_valley = mod_valleys(:,contains(mod_name,'test2'));
@@ -225,7 +225,7 @@ if exist('mod_name','var')
     if find(contains(mod_name, 'test3')) ~= 0 
         test3 = mod_avg(:,contains(mod_name, 'test3'));
         test3_stim = mod_stim_type(:,contains(mod_name, 'test3'));
-%        test3_level = mod_stim_level(:,contains(mod_name, 'test3'));
+        test3_level = mod_stim_level(:,contains(mod_name, 'test3'));
         test3_name = mod_name(:,contains(mod_name, 'test3'));
         test3_peak = mod_peaks(:,contains(mod_name,'test3'));
         test3_valley = mod_valleys(:,contains(mod_name,'test3'));
@@ -233,7 +233,7 @@ if exist('mod_name','var')
     if find(contains(mod_name, 'test4')) ~= 0 
         test4 = mod_avg(:,contains(mod_name, 'test4'));
         test4_stim = mod_stim_type(:,contains(mod_name, 'test4'));
-%        test4_level = mod_stim_level(:,contains(mod_name, 'test4'));
+        test4_level = mod_stim_level(:,contains(mod_name, 'test4'));
         test4_name = mod_name(:,contains(mod_name, 'test4'));
         test4_peak = mod_peaks(:,contains(mod_name,'test4'));
         test4_valley = mod_valleys(:,contains(mod_name,'test4'));
@@ -250,70 +250,70 @@ end
 
 %testnames = who('-regexp', '_name');
 %Plot ------------------
-%figure('units','normalized','position',[0.05 0.25 0.45 0.6]);
-% if exist('test1_peak', 'var')
-%     semilogx(freqs, test1_peak, 'LineStyle',':', 'color', [0 0.498 0], 'linewidth', 1.0);  hold on;
-%     t1peaklbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ') peaks'];
-% else t1peaklbl = '';
-% end
+figure('units','normalized','position',[0.05 0.25 0.45 0.6]);
+if exist('test1_peak', 'var')
+    semilogx(freqs, test1_peak, 'LineStyle',':', 'color', [0 0.498 0], 'linewidth', 1.0);  hold on;
+    t1peaklbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ') peaks'];
+else t1peaklbl = '';
+end
 if exist('test1','var')
     semilogx(freqs, test1, 'color', [0 0.498 0], 'linewidth', 1.5);  hold on;
-    %t1lbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ')'];
+    t1lbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ')'];
 else t1lbl = '';
 end
-% if exist('test1_valley','var')
-%     semilogx(freqs, test1_valley, 'LineStyle',':', 'color', [0 0.498 0], 'linewidth', 1.0);  hold on;
-%     t1valleylbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ') valleys'];
-% else t1valleylbl = '';
-% end
-% if exist('test2_peak','var')
-%     semilogx(freqs, test2_peak, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
-%     t2peaklbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ') peaks'];
-% else t2peaklbl = '';
-% end
+if exist('test1_valley','var')
+    semilogx(freqs, test1_valley, 'LineStyle',':', 'color', [0 0.498 0], 'linewidth', 1.0);  hold on;
+    t1valleylbl = [cell2mat(test1_stim) ' (' cell2mat(test1_level) ') valleys'];
+else t1valleylbl = '';
+end
+if exist('test2_peak','var')
+    semilogx(freqs, test2_peak, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
+    t2peaklbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ') peaks'];
+else t2peaklbl = '';
+end
 if exist('test2','var')
     semilogx(freqs, test2, 'color', [0.6 0.2 1], 'linewidth', 1.5);  hold on;
-   % t2lbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ')'];
+    t2lbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ')'];
 else t2lbl = '';
 end
-% if exist('test2_valley','var')
-%     semilogx(freqs, test2_valley, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
-%     t2valleylbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ') valleys'];
-% else t2valleylbl = '';
-% end
-% if exist('test3_peak','var')
-%     semilogx(freqs, test3_peak, 'LineStyle',':', 'color', [0 0.7 1.0], 'linewidth', 1.0);  hold on;
-%     t3peaklbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ') peaks'];
-% else t3peaklbl = '';
-% end
+if exist('test2_valley','var')
+    semilogx(freqs, test2_valley, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
+    t2valleylbl = [cell2mat(test2_stim) ' (' cell2mat(test2_level) ') valleys'];
+else t2valleylbl = '';
+end
+if exist('test3_peak','var')
+    semilogx(freqs, test3_peak, 'LineStyle',':', 'color', [0 0.7 1.0], 'linewidth', 1.0);  hold on;
+    t3peaklbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ') peaks'];
+else t3peaklbl = '';
+end
 if exist('test3','var')
     semilogx(freqs, test3, 'color', [0 0.7 1.0], 'linewidth', 1.5);  hold on;
-   % t3lbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ')'];
+    t3lbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ')'];
 else t3lbl = '';
 end
-% if exist('test3_valley','var')
-%     semilogx(freqs, test3_valley, 'LineStyle',':', 'color', [0 0.7 1.0], 'linewidth', 1.0);  hold on;
-%     t3valleylbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ') valleys'];
-% else t3valleylbl = '';
-% end
-% if exist('test4_peak','var')
-%     semilogx(freqs, test4_peak, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
-%     t4peaklbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ') peaks'];
-% else t4peaklbl = '';
-% end
+if exist('test3_valley','var')
+    semilogx(freqs, test3_valley, 'LineStyle',':', 'color', [0 0.7 1.0], 'linewidth', 1.0);  hold on;
+    t3valleylbl = [cell2mat(test3_stim) ' (' cell2mat(test3_level) ') valleys'];
+else t3valleylbl = '';
+end
+if exist('test4_peak','var')
+    semilogx(freqs, test4_peak, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
+    t4peaklbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ') peaks'];
+else t4peaklbl = '';
+end
 if exist('test4','var')
     semilogx(freqs, test4, 'color', [1 0.69 0.13], 'linewidth', 1.5);  hold on;
-   % t4lbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ')'];
+    t4lbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ')'];
 else t4lbl = '';
 end
-% if exist('test4_valley','var')
-%     semilogx(freqs, test4_valley, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
-%     t4valleylbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ') valleys'];
-% else t4valleylbl = '';
-% end
+if exist('test4_valley','var')
+    semilogx(freqs, test4_valley, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
+    t4valleylbl = [cell2mat(test4_stim) ' (' cell2mat(test4_level) ') valleys'];
+else t4valleylbl = '';
+end
 if exist('th_name', 'var')
     semilogx(audiofreqs(I), audioThresh(I),'b--', 'linewidth', 1); 
-   % thrlbl = th_name;
+    thrlbl = th_name;
 else thrlbl = '';
 end
         
@@ -331,7 +331,6 @@ lbls = [lbls(~cellfun('isempty',lbls)) ; 'MAP'];
 MAP = [17.5 10.2 8.5 9.3 9.5 12.9 13.0 15.0 16.0 18.3 22.1 26.9]; 
 semilogx(audiofreqs, MAP, 'k:');
 
-
 % if exist('test2_peak')
 %     semilogx(freqs, test2_peak, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
 %     semilogx(freqs, test2_valley, 'LineStyle',':', 'color', [0.6 0.2 1], 'linewidth', 1.0);  hold on;
@@ -344,8 +343,8 @@ semilogx(audiofreqs, MAP, 'k:');
 %     semilogx(freqs, test4_peak, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
 %     semilogx(freqs, test4_valley, 'LineStyle',':', 'color', [1 0.69 0.13], 'linewidth', 1.0);  hold on;
 % end
-%hLeg = legend(lbls, 'Location', 'Northwest');
-%hLeg.ItemHitFcn = @action1; 
+hLeg = legend(lbls, 'Location', 'Northwest');
+hLeg.ItemHitFcn = @action1; 
 
 % switch nargin
 %     case 2
